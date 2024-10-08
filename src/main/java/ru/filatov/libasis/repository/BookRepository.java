@@ -1,11 +1,12 @@
 package ru.filatov.libasis.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import ru.filatov.libasis.entity.BookEntity;
 
 import java.util.List;
-@Component
+
+@Repository
 public class BookRepository implements CrudRepository<BookEntity, Integer> {
     private final List<BookEntity> booksContainer;
 
@@ -26,11 +27,7 @@ public class BookRepository implements CrudRepository<BookEntity, Integer> {
 
     @Override
     public void delete(Integer bookId) {
-        if (booksContainer.get(bookId-1) != null) {
-            booksContainer.remove(bookId-1);
-        } else {
-            System.out.println("Book not found");
-        }
+        booksContainer.remove(bookId-1);
     }
 
     @Override

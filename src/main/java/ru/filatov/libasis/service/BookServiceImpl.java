@@ -10,98 +10,57 @@ import java.util.regex.Pattern;
 
 @Service
 public class BookServiceImpl implements BookService {
-    BookRepository repository;
+    BookRepository bookRepository;
     Scanner sc;
 
     @Autowired
-    public BookServiceImpl(BookRepository repository) {
-        this.repository = repository;
+    public BookServiceImpl(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
         sc = new Scanner(System.in);
         sc.useDelimiter(Pattern.compile("(\\n)|;"));
     }
 
     @Override
-    public void createBook() {
-        BookEntity book = new BookEntity();
-        System.out.print("Введите id: ");
-        book.setId(sc.nextInt());
-        System.out.print("Введите название: ");
-        book.setTitle(sc.next());
-        System.out.print("Введите автора: ");
-        book.setAuthor(sc.next());
-        System.out.print("Введите описание: ");
-        book.setDescription(sc.next());
-        book.setInStock(true);
-
-        repository.create(book);
-        System.out.println("Book " + book.getTitle() + " created");
+    public void createBook(Integer id, String title, String author, String description) {
+        BookEntity book = new BookEntity(id, title, author, description, true);
+        bookRepository.create(book);
     }
 
     @Override
-    public void findById() {
-        System.out.print("Введите id для поиска: ");
-        Integer id = sc.nextInt();
-        System.out.println(repository.read(id));
+    public void findById(Integer id) {
+        System.out.println(bookRepository.read(id));
     }
 
     @Override
-    public void deleteById() {
-        System.out.print("Введите id для удаления: ");
-        Integer id = sc.nextInt();
-
-        repository.delete(id);
-        System.out.println("Book " + id + " deleted");
+    public void deleteById(Integer id) {
+        bookRepository.delete(id);
     }
 
     @Override
-    public void updateDescription() {
-        System.out.print("Введите id: ");
-        Integer id = sc.nextInt();
-        System.out.print("Введите новое описание: ");
-        String newDescription = sc.next();
-        BookEntity book = repository.read(id);
+    public void updateDescription(Integer id, String newDescription) {
+        BookEntity book = bookRepository.read(id);
         book.setDescription(newDescription);
-
-        repository.update(book);
-        System.out.println("Book " + id + " description updated");
+        bookRepository.update(book);
     }
 
     @Override
-    public void updateAuthor() {
-        System.out.print("Введите id: ");
-        Integer id = sc.nextInt();
-        System.out.print("Введите нового автора: ");
-        String newAuthor = sc.next();
-        BookEntity book = repository.read(id);
+    public void updateAuthor(Integer id,  String newAuthor) {
+        BookEntity book = bookRepository.read(id);
         book.setAuthor(newAuthor);
-
-        repository.update(book);
-        System.out.println("Book " + id + " author updated");
+        bookRepository.update(book);
     }
 
     @Override
-    public void updateTitle() {
-        System.out.print("Введите id: ");
-        Integer id = sc.nextInt();
-        System.out.print("Введите новое название: ");
-        String newTitle = sc.next();
-        BookEntity book = repository.read(id);
+    public void updateTitle(Integer id,  String newTitle) {
+        BookEntity book = bookRepository.read(id);
         book.setTitle(newTitle);
-
-        repository.update(book);
-        System.out.println("Book " + id + " title updated");
+        bookRepository.update(book);
     }
 
     @Override
-    public void updateInStockStatus() {
-        System.out.print("Введите id: ");
-        Integer id = sc.nextInt();
-        System.out.print("Введите новый статус: ");
-        Boolean newStatus = sc.nextBoolean();
-        BookEntity book = repository.read(id);
+    public void updateInStockStatus(Integer id, Boolean newStatus) {
+        BookEntity book = bookRepository.read(id);
         book.setInStock(newStatus);
-
-        repository.update(book);
-        System.out.println("Book " + id + " status updated");
+        bookRepository.update(book);
     }
 }
