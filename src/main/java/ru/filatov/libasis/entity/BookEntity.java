@@ -1,42 +1,39 @@
 package ru.filatov.libasis.entity;
 
-public class BookEntity {
-    private Integer id;
-    private String title;
-    private String author;
-    private String description;
-    private Boolean inStock;
+import jakarta.persistence.*;
 
-    public BookEntity(Integer id, String title, String author, String description, Boolean inStock) {
+@Entity
+@Table(name = "books")
+public class BookEntity {
+    @Id
+    @GeneratedValue
+    private Integer id;
+    @Column
+    private String title;
+    @Column
+    private String author;
+    @Column
+    private String description;
+    @Column
+    private String status;
+
+    public BookEntity(String title, String author, String description, String status) {
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.status = status;
+    }
+
+    public BookEntity(Integer id, String title, String author, String description, String status) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.description = description;
-        this.inStock = inStock;
+        this.status = status;
     }
 
     public BookEntity() {
         super();
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setInStock(Boolean inStock) {
-        this.inStock = inStock;
     }
 
     public Integer getId() {
@@ -55,8 +52,28 @@ public class BookEntity {
         return description;
     }
 
-    public Boolean isInStock() {
-        return inStock;
+    public String getStatus() {
+        return status;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
@@ -66,7 +83,7 @@ public class BookEntity {
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
                 ", description='" + description + '\'' +
-                ", inStock=" + inStock +
+                ", status='" + status + '\'' +
                 '}';
     }
 }
