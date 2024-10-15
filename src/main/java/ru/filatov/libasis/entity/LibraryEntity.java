@@ -26,6 +26,14 @@ public class LibraryEntity {
     @Column
     private Float rate;
 
+    public LibraryEntity(Integer id, BookEntity book, UserEntity responsible, String addDate, String inStockCount, Float rate) {
+        this.id = id;
+        this.book = book;
+        this.responsible = responsible;
+        this.addDate = addDate;
+        this.inStockCount = inStockCount;
+        this.rate = rate;
+    }
 
     public LibraryEntity(BookEntity book, UserEntity responsible, String addDate, String inStockCount, Float rate) {
         this.book = book;

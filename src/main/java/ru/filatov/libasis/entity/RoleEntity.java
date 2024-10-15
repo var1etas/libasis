@@ -1,7 +1,6 @@
 package ru.filatov.libasis.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 
 @Entity
 @Table(name = "roles")
@@ -11,23 +10,23 @@ public class RoleEntity {
     private Integer id;
 
     @Column
-    private String role;
+    private String name;
 
     @Column(name = "activity_status")
-    private String activityStatus;
+    private Boolean activityStatus;
 
     @Column
     private String description;
 
-    public RoleEntity(Integer id, String role, String activityStatus, String description) {
+    public RoleEntity(Integer id, String name, Boolean activityStatus, String description) {
         this.id = id;
-        this.role = role;
+        this.name = name;
         this.activityStatus = activityStatus;
         this.description = description;
     }
 
-    public RoleEntity(String role, String activityStatus, String description) {
-        this.role = role;
+    public RoleEntity(String name, Boolean activityStatus, String description) {
+        this.name = name;
         this.activityStatus = activityStatus;
         this.description = description;
     }
@@ -39,11 +38,11 @@ public class RoleEntity {
         return id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public String getActivityStatus() {
+    public Boolean getActivityStatus() {
         return activityStatus;
     }
 
@@ -55,11 +54,11 @@ public class RoleEntity {
         this.id = id;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String role) {
+        this.name = role;
     }
 
-    public void setActivityStatus(String activityStatus) {
+    public void setActivityStatus(Boolean activityStatus) {
         this.activityStatus = activityStatus;
     }
 
@@ -71,7 +70,7 @@ public class RoleEntity {
     public String toString() {
         return "RoleEntity{" +
                 "id=" + id +
-                ", role='" + role + '\'' +
+                ", role='" + name + '\'' +
                 ", activityStatus='" + activityStatus + '\'' +
                 ", description='" + description + '\'' +
                 '}';

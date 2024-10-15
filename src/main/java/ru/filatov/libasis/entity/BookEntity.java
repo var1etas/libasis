@@ -15,16 +15,16 @@ public class BookEntity {
     @Column
     private String description;
     @Column
-    private String status;
+    private Boolean status;
 
-    public BookEntity(String title, String author, String description, String status) {
+    public BookEntity(String title, String author, String description, Boolean status) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.status = status;
     }
 
-    public BookEntity(Integer id, String title, String author, String description, String status) {
+    public BookEntity(Integer id, String title, String author, String description, Boolean status) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -52,7 +52,7 @@ public class BookEntity {
         return description;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
@@ -72,7 +72,7 @@ public class BookEntity {
         this.description = description;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 
