@@ -3,7 +3,7 @@ package ru.filatov.libasis.adapter.web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.filatov.libasis.entity.BookEntity;
-import ru.filatov.libasis.repository.BookRepository;
+import ru.filatov.libasis.service.crud.BookService;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import java.util.List;
 @RequestMapping("/book")
 public class BookController {
     @Autowired
-    private BookRepository bookRepository;
+    private BookService bookService;
 
     @GetMapping
     public List<BookEntity> findByTitle(@RequestParam String title) {
-        return bookRepository.findByTitle(title);
+        return bookService.findByTitle(title);
     }
 }

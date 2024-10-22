@@ -13,12 +13,12 @@
         <th>Phone number</th>
         <th>Role</th>
     </tr>
-    <tr>
+    <tr th:each="user : ${users}">
         <td th:text="${user.id}"></td>
         <td th:text="${user.email}"></td>
         <td th:text="${user.name}"></td>
         <td th:text="${user.phoneNumber}"></td>
-        <td th:text="admin"></td>
+        <td th:text="${user.role.name}"></td>
     </tr>
 </table>
 </body>

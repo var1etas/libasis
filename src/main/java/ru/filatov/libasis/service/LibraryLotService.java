@@ -15,6 +15,6 @@ public class LibraryLotService {
     }
 
     public void addLot(LibraryDto libraryDto) {
-
+        // TODO
     }
 }

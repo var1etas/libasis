@@ -5,9 +5,16 @@ import org.springframework.stereotype.Service;
 import ru.filatov.libasis.entity.UserEntity;
 import ru.filatov.libasis.repository.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserService implements EntityService<UserEntity> {
+    @Autowired
     UserRepository repository;
+
+    public List<UserEntity> findByRole(String role) {
+        return repository.findByRole(role);
+    }
 
     @Autowired
     public UserService(UserRepository repository) {

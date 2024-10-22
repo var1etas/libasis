@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.filatov.libasis.entity.UserEntity;
-import ru.filatov.libasis.repository.UserRepository;
 import org.springframework.ui.Model;
+import ru.filatov.libasis.service.crud.UserService;
 
 import java.util.List;
 
@@ -13,17 +13,17 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @GetMapping
     public List<UserEntity> getUserByRole(@RequestParam String role) {
-        return userRepository.findByRole(role);
+        return userService.findByRole(role);
     }
 
-    @GetMapping("/html")
-    public String greeting(@RequestParam String role, Model model) {
-        UserEntity user = userRepository.findByRole(role).getFirst();
-        model.addAttribute("user", user);
+    @GetMapping("/admins")
+    public String getAdmins(Model model) {
+        List<UserEntity> admins = userService.findByRole("admin");
+        model.addAttribute("users", admins);
         return "user";
     }
 }

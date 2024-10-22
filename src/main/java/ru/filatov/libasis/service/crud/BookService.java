@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.filatov.libasis.entity.BookEntity;
 import ru.filatov.libasis.repository.BookRepository;
 
+import java.util.List;
+
 
 @Service
 public class BookService implements EntityService<BookEntity> {
@@ -14,6 +16,10 @@ public class BookService implements EntityService<BookEntity> {
     @Autowired
     public BookService(BookRepository repository) {
         this.repository = repository;
+    }
+
+    public List<BookEntity> findByTitle(String title){
+        return repository.findByTitle(title);
     }
 
     @Override
