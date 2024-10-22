@@ -1,44 +1,50 @@
 package ru.filatov.libasis.service.crud;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.filatov.libasis.entity.Role;
 import ru.filatov.libasis.entity.UserEntity;
 import ru.filatov.libasis.repository.UserRepository;
 
 import java.util.List;
 
 @Service
-public class UserService implements EntityService<UserEntity> {
-    @Autowired
+public class UserService implements UserDetailsService {
+
     UserRepository repository;
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public List<UserEntity> findByRole(String role) {
         return repository.findByRole(role);
     }
 
-    @Autowired
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
-
-    @Override
-    public void create(UserEntity user) {
+    public void addUser(UserEntity user) {
+        user.setRole(Role.USER);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
     }
 
-    @Override
-    public UserEntity read(Integer id) {
-        return repository.findById(id).orElse(null);
+    private UserEntity findByLogin(String username) {
+        return repository.findByLogin(username);
     }
 
     @Override
-    public void update(Integer id, UserEntity user) {
-        repository.save(new UserEntity(id, user.getRole(), user.getName(),
-                user.getEmail(), user.getPhoneNumber()));
-    }
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-    @Override
-    public void delete(Integer id) {
-        repository.deleteById(id);
+        UserDetails user = repository.findByLogin(username);
+        if (user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return user;
     }
 }

@@ -9,6 +9,9 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface UserRepository extends CrudRepository<UserEntity, Integer> {
-    @Query("FROM UserEntity WHERE role.name = :role")
+    @Query("FROM UserEntity WHERE role = :role")
     List<UserEntity> findByRole(String role);
+
+    @Query("FROM UserEntity WHERE login = :login")
+    UserEntity findByLogin(String login);
 }

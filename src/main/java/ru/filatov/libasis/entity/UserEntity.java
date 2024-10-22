@@ -1,90 +1,102 @@
 package ru.filatov.libasis.entity;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private RoleEntity role;
-    @Column
+    @Column(nullable = false)
     private String name;
-    @Column
-    private String email;
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(unique = true, nullable = false)
+    private String login;
+    @Column(nullable = false)
+    private String password;
+    @Column(nullable = false)
+    private Role role;
 
     public UserEntity() {
         super();
     }
 
-    public UserEntity(RoleEntity role, String name, String email, String phoneNumber) {
-        this.role = role;
+    public UserEntity(String name, String login, String password, Role role) {
         this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.login = login;
+        this.password = password;
+        this.role = role;
     }
 
-    public UserEntity(Integer id, RoleEntity role, String name, String email, String phoneNumber) {
+    public UserEntity(Integer id, String name, String login, String password, Role role) {
         this.id = id;
-        this.role = role;
         this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.login = login;
+        this.password = password;
+        this.role = role;
     }
 
-    public RoleEntity getRole() {
-        return role;
+    public UserEntity(String name, String login, String password) {
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.role = Role.USER;
+    }
+
+
+    public Integer getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public Integer getId() {
-        return id;
+    public Role getRole() {
+        return role;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public void setRole(RoleEntity role) {
-        this.role = role;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", role=" + role +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(role);
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
     }
 }

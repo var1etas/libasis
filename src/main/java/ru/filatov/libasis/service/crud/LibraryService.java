@@ -7,7 +7,7 @@ import ru.filatov.libasis.entity.LibraryEntity;
 import ru.filatov.libasis.repository.LibraryRepository;
 
 @Service
-public class LibraryService implements EntityService<LibraryEntity> {
+public class LibraryService{
     LibraryRepository repository;
 
     @Autowired
@@ -15,23 +15,23 @@ public class LibraryService implements EntityService<LibraryEntity> {
         this.repository = repository;
     }
 
-    @Override
+
     public void create(LibraryEntity libraryLot) {
         repository.save(libraryLot);
     }
 
-    @Override
+
     public LibraryEntity read(Integer id) {
         return repository.findById(id).orElse(null);
     }
 
-    @Override
+
     public void update(Integer id, LibraryEntity libraryLot) {
         repository.save(new LibraryEntity(id, libraryLot.getBook(),libraryLot.getResponsible(),
                 libraryLot.getAddDate(), libraryLot.getInStockCount(), libraryLot.getRate()));
     }
 
-    @Override
+
     @Transactional
     public void delete(Integer id) {
         repository.deleteById(id);
