@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "reserves")
-public class ReservesEntity {
+public class ReserveEntity {
     @Id
     @GeneratedValue
     private Integer id;
@@ -20,13 +20,34 @@ public class ReservesEntity {
     private UserEntity user;
 
     @Column(name = "start_date")
-    private Timestamp startDate;
+    private String startDate;
 
     @Column(name = "finish_date")
-    private Timestamp finishDate;
+    private String finishDate;
 
     @Column(name = "deadline_status")
-    private String deadlineStatus;
+    private Boolean deadlineStatus;
+
+    public ReserveEntity(Integer id, BookEntity book, UserEntity user, String startDate, String finishDate, Boolean deadlineStatus) {
+        this.id = id;
+        this.book = book;
+        this.user = user;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.deadlineStatus = deadlineStatus;
+    }
+
+    public ReserveEntity(BookEntity book, UserEntity user, String startDate, String finishDate, Boolean deadlineStatus) {
+        this.book = book;
+        this.user = user;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.deadlineStatus = deadlineStatus;
+    }
+
+    public ReserveEntity() {
+        super();
+    }
 
     public Integer getId() {
         return id;
@@ -40,15 +61,15 @@ public class ReservesEntity {
         return user;
     }
 
-    public Timestamp getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public Timestamp getFinishDate() {
+    public String getFinishDate() {
         return finishDate;
     }
 
-    public String getDeadlineStatus() {
+    public Boolean getDeadlineStatus() {
         return deadlineStatus;
     }
 
@@ -64,15 +85,15 @@ public class ReservesEntity {
         this.user = user;
     }
 
-    public void setStartDate(Timestamp startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public void setFinishDate(Timestamp finishDate) {
+    public void setFinishDate(String finishDate) {
         this.finishDate = finishDate;
     }
 
-    public void setDeadlineStatus(String deadlineStatus) {
+    public void setDeadlineStatus(Boolean deadlineStatus) {
         this.deadlineStatus = deadlineStatus;
     }
 
