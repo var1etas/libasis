@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void addUser(UserEntity user) {
-        user.setRole(Role.USER);
+        user.setRole(Role.ROLE_ADMIN);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
     }

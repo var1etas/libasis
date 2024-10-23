@@ -45,7 +45,7 @@ public class UserEntity implements UserDetails {
         this.name = name;
         this.login = login;
         this.password = password;
-        this.role = Role.USER;
+        this.role = Role.ROLE_USER;
     }
 
 
