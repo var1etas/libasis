@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void addUser(UserEntity user) {
-        user.setRole(Role.ROLE_ADMIN);
+        user.setRole(Role.ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         repository.save(user);
     }
@@ -40,7 +40,6 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         UserDetails user = repository.findByLogin(username);
         if (user == null) {
             throw new UsernameNotFoundException(username);
