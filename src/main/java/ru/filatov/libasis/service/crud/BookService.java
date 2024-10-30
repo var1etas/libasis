@@ -10,7 +10,8 @@ import java.util.List;
 
 
 @Service
-public class BookService implements EntityService<BookEntity> {
+public class BookService {
+    @Autowired
     private final BookRepository repository;
 
     @Autowired
@@ -22,24 +23,23 @@ public class BookService implements EntityService<BookEntity> {
         return repository.findByTitle(title);
     }
 
-    @Override
+
     public void create(BookEntity book) {
         repository.save(book);
     }
 
-    @Override
+
     public BookEntity read(Integer id) {
         return repository.findById(id).orElse(null);
     }
 
-    @Override
+
     public void update(Integer id, BookEntity book) {
         repository.save(new BookEntity(id, book.getTitle(), book.getAuthor(),
                 book.getDescription(), book.getStatus()));
     }
 
     @Transactional
-    @Override
     public void delete(Integer id) {
         repository.deleteById(id);
     }
