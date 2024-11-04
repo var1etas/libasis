@@ -23,6 +23,7 @@ public class RegistrationController {
     {
         return "registration";
     }
+
     @PostMapping("/registration")
     public String adduser(UserEntity user, Model model)
     {

@@ -1,12 +1,11 @@
 package ru.filatov.libasis.adapter.web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.filatov.libasis.entity.ReportEntity;
 import ru.filatov.libasis.service.ReportService;
-
-import javax.swing.text.html.HTML;
-import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/reports")
@@ -19,12 +18,13 @@ public class ReportController {
     }
 
     @GetMapping("/generate")
-    public Integer generateReport() {
-        return reportService.startCreating();
+    public ResponseEntity<Object> generateReport() {
+        return new ResponseEntity<>(reportService.startCreating(), HttpStatus.CREATED);
     }
 
     @GetMapping("{report_id}")
-    public String getReport(@PathVariable("report_id") Integer report_id) {
-        return reportService.getReport(report_id).toString();
+    public ResponseEntity<String> getReport(@PathVariable("report_id") Integer reportId) {
+        ReportEntity reportEntity = reportService.getReport(reportId);
+        return new ResponseEntity<>(reportEntity.toString(), HttpStatus.FOUND);
     }
 }
