@@ -18,9 +18,6 @@ public class BookEntity {
     private String description;
     @Column
     private Boolean status;
-    @Column
-    @OneToMany
-    private List<GenreEntity> genres;
 
     public BookEntity(String title, String author, String description, Boolean status) {
         this.title = title;
@@ -61,10 +58,6 @@ public class BookEntity {
         return status;
     }
 
-    public List<GenreEntity> getGenres() {
-        return genres;
-    }
-
     public void setId(Integer id) {
         this.id = id;
     }
@@ -85,19 +78,15 @@ public class BookEntity {
         this.status = status;
     }
 
-    public void setGenres(List<GenreEntity> genres) {
-        this.genres = genres;
-    }
 
     @Override
     public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", genres=" + genres +
-                '}';
+        return "<tr>" + "\n" +
+                "   <td>id=" + id + "</td>" + "\n" +
+                "   <td>title=" + title + "</td>" + "\n" +
+                "   <td>author=" + author + "</td>" + "\n" +
+                "   <td>description=" + description + "</td>" + "\n" +
+                "   <td>status=" + status.toString() + "</td>" + "\n" +
+                "</tr>";
     }
 }
