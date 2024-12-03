@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User</title>
+</head>
+<body>
+<h1>Books</h1>
+<div>
+    <a th:href="@{/api/adminpanel}">
+        <button type="button">Back</button>
+    </a>
+</div>
+<table border="1">
+    <form th:action="@{/api/adminpanel/search}" method="get">
+        <label for="query">Search:</label>
+        <input type="text" id="query" name="query" placeholder="Enter your search" required>
+
+        <!-- Hidden field to set search type -->
+        <input type="hidden" name="type" value="" id="searchType">
+
+        <!-- Buttons to trigger different types of searches -->
+        <button type="submit" onclick="setSearchType('title')">Search by Title</button>
+        <button type="submit" onclick="setSearchType('author')">Search by Author</button>
+        <button type="submit" onclick="setSearchType('genre')">Search by Genre</button>
+    </form>
+    <script>
+        function setSearchType(type) {
+            document.getElementById('searchType').value = type;
+        }
+    </script>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Description</th>
+        <th>Genre</th>
+        <th>Status</th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.title}"></td>
+        <td th:text="${book.author}"></td>
+        <td th:text="${book.description}"></td>
+        <td th:text="${book.genre}"></td>
+        <td th:text="${book.status}"></td>
+        <td>
+            <a th:href="@{/api/adminpanel/book/{bookId}(bookId=${book.id})}" th:text="edit"></a>
+        </td>
+        <td>
+            <form th:action="@{/api/adminpanel/book/delete/{bookId}(bookId=${book.id})}" method="post">
+<!--                <input type="hidden" name="_method" value="put">-->
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

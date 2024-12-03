@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User</title>
+</head>
+<body>
+<h1>Books</h1>
+<div>
+    <a th:href="@{/api/adminpanel}">
+        <button type="button">Back</button>
+    </a>
+</div>
+<table border="1">
+    <form th:action="@{/api/adminpanel/report}" method="post">
+        <div>
+            <button type="submit">Generate report</button>
+        </div>
+    </form>
+    <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Books</th>
+        <th>Active Users</th>
+        <th>Book reserves stat</th>
+        <th>Book return deadline stat</th>
+    </tr>
+    <tr th:each="report : ${reports}">
+        <td th:text="${report.id}"></td>
+        <td th:text="${report.date}"></td>
+        <td th:text="${report.bookCount}"></td>
+        <td th:text="${report.activeUsersCount}"></td>
+        <td th:text="${report.bookReservationStatistic}"></td>
+        <td th:text="${report.bookReturnStatistic}"></td>
+    </tr>
+</table>
+</body>
+</html>

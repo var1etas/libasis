@@ -2,48 +2,48 @@ package ru.filatov.libasis.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.filatov.libasis.model.dto.BookRequestDto;
 import ru.filatov.libasis.model.entity.BookEntity;
-import ru.filatov.libasis.model.entity.GenreEntity;
 import ru.filatov.libasis.model.repository.BookRepository;
-import ru.filatov.libasis.model.repository.GenreRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-
+/**
+ * Сервис для работы с книгами
+ */
 @Service
 public class BookService {
     private BookRepository bookRepository;
-    private GenreRepository genreRepository;
 
     @Autowired
-    public BookService(BookRepository bookRepository, GenreRepository genreRepository) {
+    public BookService(BookRepository bookRepository){
         this.bookRepository = bookRepository;
-        this.genreRepository = genreRepository;
     }
 
-    public void createBook(BookRequestDto bookRequestDto) {
-        GenreEntity bookGenre = genreRepository.findByName(bookRequestDto.genre());
-        BookEntity book = new BookEntity(bookRequestDto.title(), bookRequestDto.author(),
-                bookRequestDto.description(), bookGenre, true);
-
-        bookRepository.save(book);
+    /**
+     * Создание книги в системе
+     */
+    public BookEntity createBook(BookEntity book) {
+        book.setStatus(true);
+        return bookRepository.save(book);
     }
 
-    public boolean updateBook(Long id, BookRequestDto bookRequestDto) {
-        Optional<BookEntity> book = bookRepository.findById(id);
-        if (book.isEmpty()) {
-            return false;
-        }
-        GenreEntity bookGenre = genreRepository.findByName(bookRequestDto.genre());
-        book.get().setTitle(bookRequestDto.title());
-        book.get().setAuthor(bookRequestDto.author());
-        book.get().setDescription(bookRequestDto.description());
-        book.get().setGenre(bookGenre);
-        bookRepository.save(book.get());
-        return true;
+    /**
+     * Обновление книги в системе
+     */
+    public BookEntity updateBook(BookEntity updatedBook, Long bookId) {
+        BookEntity bookEntity = bookRepository.findById(bookId).get();
+        bookEntity.setTitle(updatedBook.getTitle());
+        bookEntity.setAuthor(updatedBook.getAuthor());
+        bookEntity.setDescription(updatedBook.getDescription());
+        bookEntity.setGenre(updatedBook.getGenre());
+        return bookRepository.save(bookEntity);
     }
+
+    /**
+     * Удаление книги из системы
+     */
     public boolean deleteBook(Long id) {
         Optional<BookEntity> book = bookRepository.findById(id);
         if (book.isEmpty()) {
@@ -52,11 +52,43 @@ public class BookService {
         bookRepository.delete(book.get());
         return true;
     }
+
+    /**
+     * Получение книги по id
+     */
     public BookEntity getBook(Long id) {
         Optional<BookEntity> book = bookRepository.findById(id);
         if (book.isEmpty()) {
             throw new NoSuchElementException("Book not found");
         }
         return book.get();
+    }
+
+    /**
+     * Получение всех книг в системе
+     */
+    public List<BookEntity> getAllBooks() {
+        return bookRepository.getAll();
+    }
+
+    /**
+     * Получение всех книг с заданным жанром
+     */
+    public List<BookEntity> getBooksByGenre(String genre) {
+        return bookRepository.findByGenre(genre);
+    }
+
+    /**
+     * Получение всех книг с заданным названием
+     */
+    public List<BookEntity> getBooksByTitle(String title) {
+        return bookRepository.findByTitle(title);
+    }
+
+    /**
+     * Получение всех книг с заданным автором
+     */
+    public List<BookEntity> getBooksByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
     }
 }

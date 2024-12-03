@@ -1,52 +1,69 @@
 package ru.filatov.libasis.controller;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import ru.filatov.libasis.model.dto.UserRequestDto;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.filatov.libasis.controller.dto.UserProfileDto;
 import ru.filatov.libasis.model.entity.UserEntity;
 import ru.filatov.libasis.model.service.UserService;
 
-@Validated
+import java.util.List;
+
+/**
+ * Обработка запросов, связанных с регистрацией и просмотром данных аккаунта
+ */
+@Controller
 @RequestMapping("/api/user")
-@RestController
 public class UserController {
-    private final UserService userService;
+    private UserService userService;
     @Autowired
-    public UserController(final UserService userService) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+//    @GetMapping("/all")
+//    public String thUser(Model model) {
+//        List<UserEntity> users = userService.getAllUsers();
+//        model.addAttribute("users", users);
+//        return "users";
+//    }
+
+    /**
+     * Возвращает форму регистрации пользователя
+     */
+    @GetMapping("/signUp")
+    public String registration(Model model) {
+        model.addAttribute("user", new UserEntity());
+        return "registration";
+    }
+
+    /**
+     * Обрабатывает запросы на регистрацию пользователя в системе
+     */
     @PostMapping("/signUp")
-    public ResponseEntity<String> signUp(@RequestBody @Valid UserRequestDto userRequestDto) {
-        if(!userService.createUser(userRequestDto)) {
-            return new ResponseEntity<>("Username already exist", HttpStatus.BAD_REQUEST);
+    public String createUser(@ModelAttribute UserEntity user, Model model) {
+        try {
+            userService.createUser(user);
+            return "redirect:/login";
+        } catch (Exception e) {
+            model.addAttribute("message", "User exists");
+            return "registration";
         }
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping
-    public ResponseEntity<String> updateUser(@RequestBody @Valid UserRequestDto userRequestDto) {
-        if (!userService.updateUser(userRequestDto)) {
-            return new ResponseEntity<>("Username not found", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("{userId}")
-    public ResponseEntity<String> getUser(@PathVariable Long userId) {
-        UserEntity user = userService.getUser(userId);
-        return new ResponseEntity<>(user.toString(), HttpStatus.OK);
-    }
-
-    @DeleteMapping("{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        if(!userService.deleteUser(userId)) {
-            return new ResponseEntity<>("Username to delete not found", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(HttpStatus.OK);
+    /**
+     * Обрабатывает запросы на просмотр профиля
+     */
+    @GetMapping("/profile")
+    public String profile(Model model, Authentication authentication) {
+        UserEntity user = userService.getUserByLogin(authentication.getName()).get();
+        UserProfileDto userProfileDto = new UserProfileDto(user.getName(), user.getLogin(), user.getStatistic(), user.getReservesCount());
+        model.addAttribute("userProfile", userProfileDto);
+        return "profile";
     }
 }

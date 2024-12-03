@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User</title>
+</head>
+<body>
+<h1>Books</h1>
+<div>
+    <a th:href="@{/}">
+        <button type="button">Home</button>
+    </a>
+</div>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Book</th>
+        <th>Start date</th>
+        <th>Finish date</th>
+        <th>Status</th>
+        <th>return</th>
+    </tr>
+    <tr th:each="reserve : ${reserves}">
+        <td th:text="${reserve.id}"></td>
+        <td th:text="${reserve.book.title}"></td>
+        <td th:text="${reserve.startDate}"></td>
+        <td th:text="${reserve.finishDate}"></td>
+        <td th:text="${reserve.deadlineStatus}"></td>
+
+        <td>
+            <a th:href="@{/api/reserve/return/{id}(id=${reserve.book.id})}" th:text="return"></a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

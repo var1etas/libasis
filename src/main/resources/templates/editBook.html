@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\
+<head>
+    <title>Registration </title>
+</head>
+<body>
+<div>
+    <a th:href="@{/api/adminpanel/books}">
+        <button type="button">Back</button>
+    </a>
+</div>
+<form th:action="@{/api/adminpanel/book/{bookId}(bookId=${book.getId()})}" th:object="${book}" method="post">
+    <div>
+        <label for="title">Название:</label>
+        <input type="text" id="title" th:field="*{title}" required/>
+    </div>
+
+    <div>
+        <label for="author">Автор:</label>
+        <input type="text" id="author" th:field="*{author}" required/>
+    </div>
+
+    <div>
+        <label for="description">Описание:</label>
+        <input type="text" id="description" th:field="*{description}" required/>
+    </div>
+
+    <div>
+        <label for="genre">Жанр:</label>
+        <input type="text" id="genre" th:field="*{genre}" required/>
+    </div>
+
+    <div>
+        <button type="submit">Обновить</button>
+    </div>
+
+</form>
+</body>
+</html>

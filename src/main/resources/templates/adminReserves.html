@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>User</title>
+</head>
+<body>
+<h1>Books</h1>
+<div>
+    <a th:href="@{/api/adminpanel}">
+        <button type="button">Back</button>
+    </a>
+</div>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Book</th>
+        <th>User</th>
+        <th>Start date</th>
+        <th>Finish date</th>
+        <th>Missed deadline status</th>
+    </tr>
+    <tr th:each="reserve : ${reserves}">
+        <td th:text="${reserve.id}"></td>
+        <td th:text="${reserve.book.title}"></td>
+        <td th:text="${reserve.user.login}"></td>
+        <td th:text="${reserve.startDate}"></td>
+        <td th:text="${reserve.finishDate}"></td>
+        <td th:text="${reserve.deadlineStatus}"></td>
+
+    </tr>
+</table>
+</body>
+</html>
