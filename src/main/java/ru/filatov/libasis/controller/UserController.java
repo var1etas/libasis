@@ -62,7 +62,7 @@ public class UserController {
     @GetMapping("/profile")
     public String profile(Model model, Authentication authentication) {
         UserEntity user = userService.getUserByLogin(authentication.getName()).get();
-        UserProfileDto userProfileDto = new UserProfileDto(user.getName(), user.getLogin(), user.getStatistic(), user.getReservesCount());
+        UserProfileDto userProfileDto = new UserProfileDto(user.getName(), user.getLogin(), user.getStatistic(), user.getReservesCount(), !user.getStatus());
         model.addAttribute("userProfile", userProfileDto);
         return "profile";
     }

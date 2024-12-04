@@ -36,6 +36,9 @@ public class ReserveService {
     public boolean reserveBook(Long bookId, String username) {
         BookEntity bookEntity = bookRepository.findById(bookId).get();
         UserEntity userEntity = userRepository.findByLogin(username).get();
+        if(!userEntity.getStatus()){
+            return false;
+        }
         if(!bookEntity.getStatus()){
             return false;
         }

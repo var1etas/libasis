@@ -40,22 +40,25 @@ public class ReserveController {
      * Обработка запросов на резервацию книги
      */
     @GetMapping("{bookId}")
-    public String reserveBook(@PathVariable Long bookId, Authentication authentication) {
+    public String reserveBook(@PathVariable Long bookId, Authentication authentication, Model model) {
+
         boolean flag = reserveService.reserveBook(bookId, authentication.getName());
         if (!flag) {
-            return "Невозможно забронировать книгу";
+            model.addAttribute("message", "Невозможно забронировать книгу");
+            return "error";
         }
-        return "redirect:/api/reserve";
+        return "redirect:/api/books";
     }
 
     /**
      * Обработка запросов на возврат книги
      */
     @GetMapping("/return/{bookId}")
-    public String returnBook(@PathVariable Long bookId, Authentication authentication) {
+    public String returnBook(@PathVariable Long bookId, Authentication authentication, Model model) {
         boolean flag = reserveService.returnBook(bookId, authentication.getName());
         if (!flag) {
-            return "Невозможно вернуть книгу";
+            model.addAttribute("message", "Невозможно вернуть книгу");
+            return "error";
         }
         return "redirect:/api/reserve";
     }
