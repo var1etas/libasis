@@ -109,15 +109,4 @@ public class BookEntity {
                 ", status=" + status +
                 '}';
     }
-
-    //    @Override
-//    public String toString() {
-//        return "<tr>" + "\n" +
-//                "   <td>id=" + id + "</td>" + "\n" +
-//                "   <td>title=" + title + "</td>" + "\n" +
-//                "   <td>author=" + author + "</td>" + "\n" +
-//                "   <td>description=" + description + "</td>" + "\n" +
-//                "   <td>status=" + status.toString() + "</td>" + "\n" +
-//                "</tr>";
-//    }
 }

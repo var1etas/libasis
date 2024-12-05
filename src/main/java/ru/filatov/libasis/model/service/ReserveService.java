@@ -43,7 +43,7 @@ public class ReserveService {
             return false;
         }
         ReserveEntity reserveEntity = new ReserveEntity(bookEntity, userEntity,
-                LocalDateTime.now(), LocalDateTime.now().plusMinutes(1L), false, false);
+                LocalDateTime.now(), LocalDateTime.now().plusWeeks(1L), false, false);
         bookEntity.setStatus(false);
         userEntity.setReservesCount(userEntity.getReservesCount() + 1);
         userRepository.save(userEntity);

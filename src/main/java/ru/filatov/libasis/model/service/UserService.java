@@ -46,32 +46,10 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Получение пользователя по id
-     */
-    public Optional<UserEntity> getUser(Long id) {
-        return userRepository.findById(id);
-    }
-
-    /**
      * Получение пользователя по логину
      */
     public Optional<UserEntity> getUserByLogin(String login) {
         return userRepository.findByLogin(login);
-    }
-
-    /**
-     * Обновление пользователя
-     */
-    public UserEntity updateUser(Long userId, UserEntity user) throws NameAlreadyBoundException {
-        Optional<UserEntity> existUser = userRepository.findById(userId);
-        if (existUser.isEmpty()) {
-            throw new NameAlreadyBoundException("Username already taken");
-        }
-        UserEntity updatedUser = existUser.get();
-        updatedUser.setName(user.getName());
-        updatedUser.setLogin(user.getLogin());
-        updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(updatedUser);
     }
 
     /**

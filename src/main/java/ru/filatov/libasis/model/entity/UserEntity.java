@@ -148,14 +148,4 @@ public class UserEntity implements UserDetails {
                 ", status=" + status +
                 '}';
     }
-//    @Override
-//    public String toString() {
-//        return "<tr>" + "\n" +
-//                "   <td>id=" + id + "</td>" + "\n" +
-//                "   <td>name=" + name + "</td>" + "\n" +
-//                "   <td>login=" + login + "</td>" + "\n" +
-//                "   <td>password='" + password + "</td>" + "\n" +
-//                "   <td>role=" + role.getAuthority() + "</td>" + "\n" +
-//                "</tr>";
-//    }
 }
