@@ -12,7 +12,6 @@ import ru.filatov.libasis.controller.dto.UserProfileDto;
 import ru.filatov.libasis.model.entity.UserEntity;
 import ru.filatov.libasis.model.service.UserService;
 
-import java.util.List;
 
 /**
  * Обработка запросов, связанных с регистрацией и просмотром данных аккаунта
@@ -20,18 +19,13 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/user")
 public class UserController {
+
     private UserService userService;
+
     @Autowired
-    public void setUserService(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
-
-//    @GetMapping("/all")
-//    public String thUser(Model model) {
-//        List<UserEntity> users = userService.getAllUsers();
-//        model.addAttribute("users", users);
-//        return "users";
-//    }
 
     /**
      * Возвращает форму регистрации пользователя
