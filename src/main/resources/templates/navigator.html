@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Navigation Page</title>
+</head>
+<body>
+<header>
+    <h1>Navigation Menu</h1>
+</header>
+<nav>
+    <ul>
+        <li>
+            <a th:href="@{/login}">
+                <button type="button">Login</button>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/api/user/signUp}">
+                <button type="button">Sign Up</button>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/api/user/profile}">
+                <button type="button">Profile</button>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/api/books}">
+                <button type="button">Books</button>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/api/reserve}">
+                <button type="button">My reserves</button>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/api/adminpanel}">
+                <button type="button">Admin Panel</button>
+            </a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>

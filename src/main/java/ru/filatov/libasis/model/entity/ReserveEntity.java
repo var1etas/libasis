@@ -2,6 +2,11 @@ package ru.filatov.libasis.model.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
+/**
+ * Сущность резервации
+ */
 @Entity
 @Table(name = "reserves")
 public class ReserveEntity {
@@ -18,15 +23,18 @@ public class ReserveEntity {
     private UserEntity user;
 
     @Column(name = "start_date")
-    private String startDate;
+    private LocalDateTime startDate;
 
     @Column(name = "finish_date")
-    private String finishDate;
+    private LocalDateTime finishDate;
 
-    @Column(name = "deadline_status")
+    @Column(name = "missed_deadline_status")
     private Boolean deadlineStatus;
 
-    public ReserveEntity(Long id, BookEntity book, UserEntity user, String startDate, String finishDate, Boolean deadlineStatus) {
+    @Column(name = "is_returned")
+    private Boolean isReturned;
+
+    public ReserveEntity(Long id, BookEntity book, UserEntity user, LocalDateTime startDate, LocalDateTime finishDate, Boolean deadlineStatus) {
         this.id = id;
         this.book = book;
         this.user = user;
@@ -35,12 +43,21 @@ public class ReserveEntity {
         this.deadlineStatus = deadlineStatus;
     }
 
-    public ReserveEntity(BookEntity book, UserEntity user, String startDate, String finishDate, Boolean deadlineStatus) {
+    public ReserveEntity(BookEntity book, UserEntity user, LocalDateTime startDate, LocalDateTime finishDate, Boolean deadlineStatus, Boolean isReturned) {
         this.book = book;
         this.user = user;
         this.startDate = startDate;
         this.finishDate = finishDate;
         this.deadlineStatus = deadlineStatus;
+        this.isReturned = isReturned;
+    }
+
+    public Boolean getReturned() {
+        return isReturned;
+    }
+
+    public void setReturned(Boolean returned) {
+        isReturned = returned;
     }
 
     public ReserveEntity() {
@@ -59,11 +76,11 @@ public class ReserveEntity {
         return user;
     }
 
-    public String getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public String getFinishDate() {
+    public LocalDateTime getFinishDate() {
         return finishDate;
     }
 
@@ -83,11 +100,11 @@ public class ReserveEntity {
         this.user = user;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public void setFinishDate(String finishDate) {
+    public void setFinishDate(LocalDateTime finishDate) {
         this.finishDate = finishDate;
     }
 

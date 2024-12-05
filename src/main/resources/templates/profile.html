@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+<header>
+    <h1>Welcome to Your Profile</h1>
+</header>
+<div>
+    <a th:href="@{/}">
+        <button type="button">Home</button>
+    </a>
+</div>
+<section>
+    <h2>User Details</h2>
+    <ul>
+        <li><strong>Name:</strong> <span th:text="${userProfile.name}">User Name</span></li>
+        <li><strong>Login:</strong> <span th:text="${userProfile.login}">User Login</span></li>
+        <li><strong>Statistic:</strong> <span th:text="${userProfile.statistic}">User Statistic</span></li>
+        <li><strong>Reserves Count:</strong> <span th:text="${userProfile.reservesCount}">0</span></li>
+        <li><strong>Banned:</strong> <span th:text="${userProfile.activityStatus()}">0</span></li>
+    </ul>
+</section>
+
+<footer>
+    <a th:href="@{/logout}">Logout</a>
+</footer>
+</body>
+</html>

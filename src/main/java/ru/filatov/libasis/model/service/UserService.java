@@ -6,12 +6,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.filatov.libasis.model.dto.UserRequestDto;
+import ru.filatov.libasis.model.entity.Role;
 import ru.filatov.libasis.model.entity.UserEntity;
 import ru.filatov.libasis.model.repository.UserRepository;
 
+import javax.naming.NameAlreadyBoundException;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+/**
+ * Сервис для работы с пользователями
+ */
 @Service
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
@@ -23,51 +29,96 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public boolean createUser(UserRequestDto userRequestDto) {
-        UserEntity user = userRepository.findByLogin(userRequestDto.login());
-        if (user != null) {
-            return false;
+    /**
+     * Создание пользователя в системе
+     */
+    public UserEntity createUser(UserEntity user) throws NameAlreadyBoundException {
+        Optional<UserEntity> existUser = userRepository.findByLogin(user.getLogin());
+        if (existUser.isPresent()) {
+            throw new NameAlreadyBoundException("Username already taken");
         }
-        UserEntity userEntity = new UserEntity(userRequestDto.name(), userRequestDto.login(),
-                passwordEncoder.encode(userRequestDto.password()));
-        userRepository.save(userEntity);
-        return true;
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.ROLE_USER);
+        user.setStatistic(100.0f);
+        user.setReservesCount(0L);
+        user.setStatus(true);
+        return userRepository.save(user);
     }
 
-    public UserEntity getUser(Long id) {
+    /**
+     * Получение пользователя по id
+     */
+    public Optional<UserEntity> getUser(Long id) {
+        return userRepository.findById(id);
+    }
+
+    /**
+     * Получение пользователя по логину
+     */
+    public Optional<UserEntity> getUserByLogin(String login) {
+        return userRepository.findByLogin(login);
+    }
+
+    /**
+     * Обновление пользователя
+     */
+    public UserEntity updateUser(Long userId, UserEntity user) throws NameAlreadyBoundException {
+        Optional<UserEntity> existUser = userRepository.findById(userId);
+        if (existUser.isEmpty()) {
+            throw new NameAlreadyBoundException("Username already taken");
+        }
+        UserEntity updatedUser = existUser.get();
+        updatedUser.setName(user.getName());
+        updatedUser.setLogin(user.getLogin());
+        updatedUser.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(updatedUser);
+    }
+
+    /**
+     * Удаление пользователя из системы
+     */
+    public void deleteUser(Long id) {
         Optional<UserEntity> user = userRepository.findById(id);
         if (user.isEmpty()) {
-            throw new UsernameNotFoundException("User not found");
-        }
-        return user.get();
-    }
-
-    public boolean updateUser(UserRequestDto userRequestDto) {
-        UserEntity user = userRepository.findByLogin(userRequestDto.login());
-        if (user == null) {
-            return false;
-        }
-        UserEntity userEntity = new UserEntity(userRequestDto.name(), userRequestDto.login(),
-                passwordEncoder.encode(userRequestDto.password()));
-        userRepository.save(userEntity);
-        return true;
-    }
-
-    public boolean deleteUser(Long id) {
-        Optional<UserEntity> user = userRepository.findById(id);
-        if (user.isEmpty()) {
-            return false;
+            throw new NoSuchElementException("User not found");
         }
         userRepository.deleteById(id);
-        return true;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userRepository.findByLogin(username);
-        if (user == null) {
+        Optional<UserEntity> user = userRepository.findByLogin(username);
+        if (user.isEmpty()) {
             throw new UsernameNotFoundException(username);
         }
-        return user;
+        return user.get();
+    }
+
+    /**
+     * Получение всех пользователей в системе
+     */
+    public List<UserEntity> getAllUsers() {
+        return userRepository.getAll();
+    }
+
+    /**
+     * Изменение статуса (активация/деактивация) аккаунта пользователя в системе
+     */
+    public void changeUserStatus(Long userId) {
+        UserEntity user = userRepository.findById(userId).get();
+        user.setStatus(!user.getStatus());
+        userRepository.save(user);
+    }
+    /**
+     * Изменение роли (пользователь/администратор) аккаунта пользователя в системе
+     */
+    public void changeUserRole(Long userId) {
+        UserEntity user = userRepository.findById(userId).get();
+        if(user.getRole() == Role.ROLE_ADMIN) {
+            user.setRole(Role.ROLE_USER);
+        } else {
+            user.setRole(Role.ROLE_ADMIN);
+        }
+        userRepository.save(user);
     }
 }

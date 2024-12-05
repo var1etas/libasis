@@ -2,6 +2,9 @@ package ru.filatov.libasis.model.entity;
 
 import jakarta.persistence.*;
 
+/**
+ * Сущность пользователя
+ */
 @Entity
 @Table(name = "books")
 public class BookEntity {
@@ -18,19 +21,29 @@ public class BookEntity {
     @Column
     private String description;
 
-    @JoinColumn
-    @ManyToOne
-    private GenreEntity genre;
+    @Column
+    private String genre;
 
     @Column
     private Boolean status;
 
-    public BookEntity(String title, String author, String description, GenreEntity genre , Boolean status) {
+    public BookEntity(Long id) {
+        this.id = id;
+    }
+
+    public BookEntity(String title, String author, String description, String genre , Boolean status) {
         this.title = title;
         this.author = author;
         this.description = description;
         this.genre = genre;
         this.status = status;
+    }
+
+    public BookEntity(String title, String author, String description, String genre) {
+        this.title = title;
+        this.author = author;
+        this.description = description;
+        this.genre = genre;
     }
 
     public BookEntity() {
@@ -77,22 +90,34 @@ public class BookEntity {
         this.status = status;
     }
 
-    public GenreEntity getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(GenreEntity genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
     @Override
     public String toString() {
-        return "<tr>" + "\n" +
-                "   <td>id=" + id + "</td>" + "\n" +
-                "   <td>title=" + title + "</td>" + "\n" +
-                "   <td>author=" + author + "</td>" + "\n" +
-                "   <td>description=" + description + "</td>" + "\n" +
-                "   <td>status=" + status.toString() + "</td>" + "\n" +
-                "</tr>";
+        return "BookEntity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
+                ", genre='" + genre + '\'' +
+                ", status=" + status +
+                '}';
     }
+
+    //    @Override
+//    public String toString() {
+//        return "<tr>" + "\n" +
+//                "   <td>id=" + id + "</td>" + "\n" +
+//                "   <td>title=" + title + "</td>" + "\n" +
+//                "   <td>author=" + author + "</td>" + "\n" +
+//                "   <td>description=" + description + "</td>" + "\n" +
+//                "   <td>status=" + status.toString() + "</td>" + "\n" +
+//                "</tr>";
+//    }
 }

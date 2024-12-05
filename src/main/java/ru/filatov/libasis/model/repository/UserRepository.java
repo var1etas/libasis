@@ -6,12 +6,26 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import ru.filatov.libasis.model.entity.UserEntity;
 
 import java.util.List;
+import java.util.Optional;
 
+/**
+ * Репозиторий для работы с пользователями
+ */
 @RepositoryRestResource
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
-    @Query("FROM UserEntity WHERE role = :role")
-    List<UserEntity> findByRole(String role);
+    /**
+     * Возвращает пользователя по логину
+     */
+    Optional<UserEntity> findByLogin(String login);
 
-    @Query("FROM UserEntity WHERE login = :login")
-    UserEntity findByLogin(String login);
+    /**
+     * Возвращает всех пользователей в системе
+     */
+    @Query("FROM UserEntity all")
+    List<UserEntity> getAll();
+
+    /**
+     * Возвращает всех пользователей с заданным статусом
+     */
+    List<UserEntity> getAllByStatus(Boolean status);
 }

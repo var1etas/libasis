@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User</title>
+</head>
+<body>
+<h1>Users</h1>
+<div>
+    <a th:href="@{/api/adminpanel}">
+        <button type="button">Back</button>
+    </a>
+</div>
+<form th:action="@{/api/adminpanel/user}" method="get">
+    <div>
+        <label for="login">Login:</label>
+        <input type="text" id="login" name="login" required/>
+    </div>
+    <button type="submit">Search</button>
+</form>
+<table border="1">
+
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Login</th>
+        <th>Role</th>
+        <th>change role</th>
+        <th>Statistic</th>
+        <th>Active status</th>
+        <th>change status</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.login}"></td>
+        <td th:text="${user.role.name}"></td>
+        <td>
+            <form th:action="@{/api/adminpanel/users/role/{userId}(userId=${user.id})}" method="post">
+                <button type="submit">Change</button>
+            </form>
+        </td>
+        <td th:text="${user.statistic}"></td>
+        <td th:text="${user.status}"></td>
+        <td>
+            <form th:action="@{/api/adminpanel/users/status/{userId}(userId=${user.id})}" method="post">
+                <button type="submit">Change</button>
+            </form>
+        </td>
+<!--        <td>-->
+<!--            <a th:href="@{/api/admin/users/status/{userId}(id=${user.id})}" th:text="change" methods="put"></a>-->
+<!--        </td>-->
+    </tr>
+</table>
+</body>
+</html>

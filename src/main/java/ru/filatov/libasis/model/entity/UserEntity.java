@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Сущность пользователя
+ */
 @Entity
 @Table(name = "users")
 public class UserEntity implements UserDetails {
@@ -30,6 +33,9 @@ public class UserEntity implements UserDetails {
     private Float statistic;
 
     @Column
+    private Long reservesCount;
+
+    @Column
     private Boolean status;
 
     public UserEntity() {
@@ -50,7 +56,7 @@ public class UserEntity implements UserDetails {
         this.login = login;
         this.password = password;
         this.role = Role.ROLE_USER;
-        this.statistic = 0f;
+        this.statistic = 100f;
         this.status = Boolean.TRUE;
     }
 
@@ -121,14 +127,35 @@ public class UserEntity implements UserDetails {
         return login;
     }
 
+    public Long getReservesCount() {
+        return reservesCount;
+    }
+
+    public void setReservesCount(Long reservesCount) {
+        this.reservesCount = reservesCount;
+    }
+
     @Override
     public String toString() {
-        return "<tr>" + "\n" +
-                "   <td>id=" + id + "</td>" + "\n" +
-                "   <td>name=" + name + "</td>" + "\n" +
-                "   <td>login=" + login + "</td>" + "\n" +
-                "   <td>password='" + password + "</td>" + "\n" +
-                "   <td>role=" + role.getAuthority() + "</td>" + "\n" +
-                "</tr>";
+        return "UserEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", statistic=" + statistic +
+                ", reservesCount=" + reservesCount +
+                ", status=" + status +
+                '}';
     }
+//    @Override
+//    public String toString() {
+//        return "<tr>" + "\n" +
+//                "   <td>id=" + id + "</td>" + "\n" +
+//                "   <td>name=" + name + "</td>" + "\n" +
+//                "   <td>login=" + login + "</td>" + "\n" +
+//                "   <td>password='" + password + "</td>" + "\n" +
+//                "   <td>role=" + role.getAuthority() + "</td>" + "\n" +
+//                "</tr>";
+//    }
 }
