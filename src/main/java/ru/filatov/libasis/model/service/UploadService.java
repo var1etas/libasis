@@ -31,8 +31,6 @@ public class UploadService {
     }
 
     public String uploadPhoto(byte[] photos) {
-
-
         final String bucketName = objectStorageConfig.getBucketName();
         final String accessKeyId = objectStorageConfig.getAccessKeyId();
         final String secretAccessKey = objectStorageConfig.getSecretAccessKey();
@@ -45,23 +43,14 @@ public class UploadService {
                 .endpointOverride(URI.create("https://storage.yandexcloud.net"))
                 .build();
 
-
-        //Map<String, String> metadata = new HashMap<>();
-//        metadata.put("company", "Baeldung");
-//        metadata.put("environment", "development");
         UUID uuid = UUID.randomUUID();
         ByteArrayInputStream inputStream = new ByteArrayInputStream(photos);
 
-        PutObjectResponse response = s3Client.putObject(request -> request
+        s3Client.putObject(request -> request
                 .bucket(bucketName).key(uuid.toString()),
                 RequestBody.fromInputStream(inputStream, inputStream.available()));
 
         return s3Client.utilities().getUrl(request -> request
                 .bucket(bucketName).key(uuid.toString())).toString();
-    }
-
-    private String generateUniqueName() {
-        UUID uuid = UUID.randomUUID();
-        return uuid.toString();
     }
 }
