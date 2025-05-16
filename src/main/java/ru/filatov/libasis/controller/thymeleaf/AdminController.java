@@ -1,4 +1,4 @@
-package ru.filatov.libasis.controller;
+package ru.filatov.libasis.controller.thymeleaf;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import java.util.List;
  * Контроллер для обработки запросов связанных с админ-панелью
  */
 @Controller
-@RequestMapping("/api/adminpanel")
+@RequestMapping("/adminpanel")
 public class AdminController {
 
     private UserService userService;

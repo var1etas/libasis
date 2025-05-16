@@ -6,11 +6,11 @@
 <body>
 <h1>Users</h1>
 <div>
-    <a th:href="@{/api/adminpanel}">
+    <a th:href="@{/adminpanel}">
         <button type="button">Back</button>
     </a>
 </div>
-<form th:action="@{/api/adminpanel/user}" method="get">
+<form th:action="@{/adminpanel/user}" method="get">
     <div>
         <label for="login">Login:</label>
         <input type="text" id="login" name="login" required/>
@@ -35,14 +35,14 @@
         <td th:text="${user.login}"></td>
         <td th:text="${user.role.name}"></td>
         <td>
-            <form th:action="@{/api/adminpanel/users/role/{userId}(userId=${user.id})}" method="post">
+            <form th:action="@{/adminpanel/users/role/{userId}(userId=${user.id})}" method="post">
                 <button type="submit">Change</button>
             </form>
         </td>
         <td th:text="${user.statistic}"></td>
         <td th:text="${user.status}"></td>
         <td>
-            <form th:action="@{/api/adminpanel/users/status/{userId}(userId=${user.id})}" method="post">
+            <form th:action="@{/adminpanel/users/status/{userId}(userId=${user.id})}" method="post">
                 <button type="submit">Change</button>
             </form>
         </td>

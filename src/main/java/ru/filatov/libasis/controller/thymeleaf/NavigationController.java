@@ -1,4 +1,4 @@
-package ru.filatov.libasis.controller;
+package ru.filatov.libasis.controller.thymeleaf;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -6,12 +6,12 @@
 <body>
 <h1>Books</h1>
 <div>
-    <a th:href="@{/api/adminpanel}">
+    <a th:href="@{/adminpanel}">
         <button type="button">Back</button>
     </a>
 </div>
 <table border="1">
-    <form th:action="@{/api/adminpanel/search}" method="get">
+    <form th:action="@{/adminpanel/search}" method="get">
         <label for="query">Search:</label>
         <input type="text" id="query" name="query" placeholder="Enter your search" required>
 
@@ -46,10 +46,10 @@
         <td th:text="${book.genre}"></td>
         <td th:text="${book.status}"></td>
         <td>
-            <a th:href="@{/api/adminpanel/book/{bookId}(bookId=${book.id})}" th:text="edit"></a>
+            <a th:href="@{/adminpanel/book/{bookId}(bookId=${book.id})}" th:text="edit"></a>
         </td>
         <td>
-            <form th:action="@{/api/adminpanel/book/delete/{bookId}(bookId=${book.id})}" method="post">
+            <form th:action="@{/adminpanel/book/delete/{bookId}(bookId=${book.id})}" method="post">
 <!--                <input type="hidden" name="_method" value="put">-->
                 <button type="submit">Delete</button>
             </form>

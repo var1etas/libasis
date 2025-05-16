@@ -27,7 +27,7 @@
         <td th:text="${reserve.deadlineStatus}"></td>
 
         <td>
-            <a th:href="@{/api/reserve/return/{id}(id=${reserve.book.id})}" th:text="return"></a>
+            <a th:href="@{/reserve/return/{id}(id=${reserve.book.id})}" th:text="return"></a>
         </td>
     </tr>
 </table>

@@ -11,7 +11,7 @@
     </a>
 </div>
 <table border="1">
-    <form th:action="@{/api/search}" method="get">
+    <form th:action="@{/book/search}" method="get">
         <label for="query">Search:</label>
         <input type="text" id="query" name="query" placeholder="Enter your search" required>
 
@@ -45,7 +45,7 @@
         <td th:text="${book.genre}"></td>
         <td th:text="${book.status}"></td>
         <td>
-            <a th:href="@{/api/reserve/{id}(id=${book.id})}" th:text="reserve"></a>
+            <a th:href="@{/reserve/{id}(id=${book.id})}" th:text="reserve"></a>
         </td>
     </tr>
 </table>

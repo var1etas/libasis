@@ -33,10 +33,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers("/", "/api/user/signUp", "/login", "/logout")
+                        .requestMatchers("/", "/user/signUp", "/login", "/logout")
                         .permitAll()
-                        .requestMatchers("/api/adminpanel/**").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                        .requestMatchers("/adminpanel/**").hasRole("ADMIN")
+                        .anyRequest().permitAll())
                 .formLogin(form -> form
                         .successHandler((request, response, authentication) -> {
                             response.sendRedirect("/");

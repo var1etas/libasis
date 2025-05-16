@@ -1,4 +1,4 @@
-package ru.filatov.libasis.controller;
+package ru.filatov.libasis.controller.thymeleaf;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +16,8 @@ import java.util.List;
  * Контроллер для обработки запросов просмотр и поиск книг в системе
  */
 @Controller
-@RequestMapping("/api")
-public class BookController {
+@RequestMapping("/book")
+public class BookControllerTh {
     private BookService bookService;
 
     @Autowired
@@ -28,7 +28,7 @@ public class BookController {
     /**
      * Обрабатывает запросы на получение всех книг в системе
      */
-    @GetMapping("/books")
+    @GetMapping("/all")
     public String getBooks(Model model) {
         List<BookEntity> books = bookService.getAllBooks();
         model.addAttribute("books", books);

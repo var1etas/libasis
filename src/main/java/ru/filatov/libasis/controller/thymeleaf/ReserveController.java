@@ -1,4 +1,4 @@
-package ru.filatov.libasis.controller;
+package ru.filatov.libasis.controller.thymeleaf;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,7 +15,7 @@ import java.util.List;
  * Контроллер для обработки запросов, связанных с резервацией книг
  */
 @Controller
-@RequestMapping("/api/reserve")
+@RequestMapping("/reserve")
 public class ReserveController {
     ReserveService reserveService;
     BookService bookService;

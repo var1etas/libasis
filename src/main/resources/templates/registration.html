@@ -7,7 +7,7 @@
 <div th:if="${message}">
     <div th:text="${message}"></div>
 </div>
-<form th:action="@{/api/user/signUp}" th:object="${user}" method="post">
+<form th:action="@{/user/signUp}" th:object="${user}" method="post">
     <div>
         <label for="name">Имя:</label>
         <input type="text" id="name" th:field="*{name}" required/>

@@ -1,4 +1,4 @@
-package ru.filatov.libasis.controller;
+package ru.filatov.libasis.controller.thymeleaf;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,13 +17,13 @@ import ru.filatov.libasis.model.service.UserService;
  * Обработка запросов, связанных с регистрацией и просмотром данных аккаунта
  */
 @Controller
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/user")
+public class UserControllerTh {
 
     private UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserControllerTh(UserService userService) {
         this.userService = userService;
     }
 

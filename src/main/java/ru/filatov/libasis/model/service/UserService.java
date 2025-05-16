@@ -45,6 +45,20 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public UserEntity updateUser(UserEntity updatedUser, Long id) {
+        Optional<UserEntity> existUser = userRepository.findById(id);
+        if (existUser.isEmpty()) {
+            throw new NoSuchElementException("User not found");
+        }
+        UserEntity user = existUser.get();
+        user.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        user.setRole(updatedUser.getRole());
+        user.setStatistic(updatedUser.getStatistic());
+        user.setReservesCount(updatedUser.getReservesCount());
+        user.setStatus(updatedUser.getStatus());
+        return userRepository.save(user);
+    }
+
     /**
      * Получение пользователя по логину
      */
@@ -98,5 +112,13 @@ public class UserService implements UserDetailsService {
             user.setRole(Role.ROLE_ADMIN);
         }
         userRepository.save(user);
+    }
+
+    public UserEntity getUserById(Long id) {
+        Optional<UserEntity> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new NoSuchElementException("User not found");
+        }
+        return user.get();
     }
 }
